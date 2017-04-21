@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "es2015",
+        "target": "es2015",
+        "outDir": "./dist/",
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "forceConsistentCasingInFileNames": true,
+        "newLine": "LF",
+        "noUnusedParameters": true,
+        "pretty": true,
+        "noUnusedLocals": true,
+        "noImplicitReturns": true
+    }
+}

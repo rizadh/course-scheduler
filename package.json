@@ -1,0 +1,27 @@
+{
+  "name": "scheduler",
+  "version": "1.0.0",
+  "description": "Generate course schedules",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/assert": "0.0.31",
+    "@types/chai": "^3.5.0",
+    "@types/mocha": "^2.2.40",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-typescript": "^0.8.1",
+    "tslint": "^5.1.0",
+    "typescript": "^2.2.2"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "prestart": "npm run build",
+    "start": "node dist/bundle.js",
+    "lint": "tslint --project tsconfig.json --type-check --force src/*.ts",
+    "test": "mocha"
+  },
+  "author": "Rizadh Nizam",
+  "license": "ISC"
+}
