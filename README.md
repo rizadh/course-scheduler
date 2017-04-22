@@ -38,12 +38,16 @@ interface RawCourse {
 #### CommonJS
 
 ```js
+// Using pre-ES2015 property access
 const scheduler = require('course-scheduler');
 const parseCourses = scheduler.parseCourses;
 const Course = scheduler.Course;
+
+// Using ES2015 array destructuring
+const { Course, parseCourses } = require('course-scheduler')
 ```
 
-#### ES2015+ Module
+#### ES Modules
 
 ```js
 import { parseCourses, Course } from 'course-scheduler';
