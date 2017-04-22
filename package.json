@@ -23,7 +23,7 @@
     "lint": "tslint --project tsconfig.json --type-check src/*.ts test/*.ts",
     "pretest": "tsc test/*.ts",
     "test": "mocha",
-    "clean": "rm -f dist/* src/*.js dist/*.js"
+    "clean": "rm -rf dist src/*.js dist/*.js"
   },
   "author": "Rizadh Nizam",
   "repository": {
