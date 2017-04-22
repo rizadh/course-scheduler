@@ -3,11 +3,11 @@
 A simple course auto-scheduler. Feed in an array describing each course (format below) and receive a set of possible
 non-conflicting course sections.
 
-Documentation is in progress... More detailed usage and feature descriptions are upcoming.
+_Documentation is in progress... More detailed usage and feature descriptions are upcoming._
 
 ## Format (TypeScript-style)
 
-```js
+```ts
 interface Course {
     code: string,
     sections: {
