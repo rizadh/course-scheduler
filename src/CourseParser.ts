@@ -1,31 +1,31 @@
 import { Course } from './Course';
 import { Section } from './Section';
-import { Session, ILocation } from './Session';
-import { Time, Day } from './Time';
+import { ILocation, Session } from './Session';
+import { Day, Time } from './Time';
 import { TimeRange } from './TimeRange';
 
 class BadFormatError extends Error { }
 
 interface IRawTime {
-    hour: number;
-    minute: number;
+    hour?: number;
+    minute?: number;
 }
 
 interface IRawSession {
-    day: number;
-    end: IRawTime;
-    location: ILocation;
-    start: IRawTime;
+    day?: number;
+    end?: IRawTime;
+    location?: ILocation;
+    start?: IRawTime;
 }
 
 interface IRawSection {
-    identifier: string;
-    sessions: IRawSession[];
+    identifier?: string;
+    sessions?: IRawSession[];
 }
 
 interface IRawCourse {
-    code: string;
-    sections: IRawSection[];
+    code?: string;
+    sections?: IRawSection[];
 }
 
 function parseTime(time: IRawTime): Time {
