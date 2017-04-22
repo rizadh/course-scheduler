@@ -3,8 +3,8 @@
   "version": "0.1.1",
   "description": "Generate course schedules",
   "main": "dist/main.js",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
+    "@types/node": "^7.0.13",
     "@types/assert": "0.0.31",
     "@types/chai": "^3.5.0",
     "@types/mocha": "^2.2.40",
@@ -15,6 +15,7 @@
     "tslint": "^5.1.0",
     "typescript": "^2.2.2"
   },
+  "devDependencies": {},
   "scripts": {
     "install": "npm run build",
     "build": "rollup -c",
