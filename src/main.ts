@@ -1,7 +1,3 @@
-import {parseCourses} from './CourseParser';
-import Course from './Course';
-
-module.exports = {
-    parseCourses,
-    possibleSectionCombinations: Course.possibleSectionCombinations,
-};
+export { Course } from './Course';
+export { parseCourses } from './CourseParser';
+export { generateCourses } from './CourseGenerator'
