@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
-        "module": "es2015",
+        "module": "commonjs",
         "target": "es2015",
+        "outDir": "./dist",
         "strictNullChecks": true,
         "alwaysStrict": true,
         "noImplicitAny": true,
@@ -13,8 +14,7 @@
         "noUnusedLocals": true,
         "noImplicitReturns": true
     },
-    "files": [
-        "src/index.ts",
-        "test/test.ts"
+    "include": [
+        "src/**/*"
     ]
 }
