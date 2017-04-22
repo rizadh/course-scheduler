@@ -2,7 +2,7 @@ import typescript from 'rollup-plugin-typescript'
 
 export default {
     entry: "src/main.ts",
-    dest: "dist/bundle.js",
+    dest: "dist/main.js",
     format: 'cjs',
     plugins: [
         typescript({

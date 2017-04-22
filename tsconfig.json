@@ -13,5 +13,8 @@
         "pretty": true,
         "noUnusedLocals": true,
         "noImplicitReturns": true
-    }
+    },
+    "files": [
+        "src/main.ts"
+    ]
 }

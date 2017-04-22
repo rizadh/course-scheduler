@@ -1,8 +1,8 @@
 {
-  "name": "scheduler",
-  "version": "1.0.0",
+  "name": "course-scheduler",
+  "version": "0.1.0",
   "description": "Generate course schedules",
-  "main": "main.js",
+  "main": "dist/main.js",
   "dependencies": {},
   "devDependencies": {
     "@types/assert": "0.0.31",
@@ -16,12 +16,17 @@
     "typescript": "^2.2.2"
   },
   "scripts": {
+    "install": "npm run build",
     "build": "rollup -c",
     "prestart": "npm run build",
-    "start": "node dist/bundle.js",
+    "start": "node dist/main.js",
     "lint": "tslint --project tsconfig.json --type-check --force src/*.ts",
     "test": "mocha"
   },
   "author": "Rizadh Nizam",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rizadh/course-scheduler.git"
+  },
+  "license": "Unlicense"
 }
