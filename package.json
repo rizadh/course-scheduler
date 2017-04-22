@@ -4,15 +4,16 @@
   "description": "Generate course schedules",
   "main": "dist/main.js",
   "dependencies": {
-    "@types/node": "^7.0.13",
     "@types/assert": "0.0.31",
     "@types/chai": "^3.5.0",
     "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.13",
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
     "rollup": "^0.41.6",
     "rollup-plugin-typescript": "^0.8.1",
     "rollup-plugin-uglify": "^1.0.2",
+    "rollup-watch": "^3.2.2",
     "tslint": "^5.1.0",
     "typescript": "^2.2.2",
     "uglify-js-harmony": "^2.7.5"
@@ -21,6 +22,7 @@
   "scripts": {
     "install": "npm run build",
     "build": "rollup -c",
+    "watch": "rollup -c -w",
     "prestart": "npm run build",
     "start": "node dist/main.js",
     "lint": "tslint --project tsconfig.json --type-check --force src/*.ts",
