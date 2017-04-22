@@ -5,8 +5,12 @@
     ],
     "jsRules": {},
     "rules": {
-        "quotemark": [true, "single"],
-         "no-parameter-properties": false
+        "quotemark": [
+            true,
+            "single"
+        ],
+        "no-parameter-properties": false,
+        "no-inferrable-types": true
     },
     "rulesDirectory": []
 }
