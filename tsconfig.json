@@ -14,7 +14,7 @@
         "noImplicitReturns": true
     },
     "files": [
-        "src/main.ts",
+        "src/index.ts",
         "test/test.ts"
     ]
 }
