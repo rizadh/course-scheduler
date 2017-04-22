@@ -8,6 +8,7 @@
     "@types/mocha": "^2.2.40",
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
+    "rimraf": "^2.6.1",
     "tslint": "^5.1.0",
     "typescript": "^2.2.2"
   },
@@ -17,7 +18,7 @@
     "build": "tsc",
     "lint": "tslint --project tsconfig.json --type-check src/**/*",
     "test": "mocha dist/*.spec.js",
-    "clean": "rm -rf dist src/*.js test/*.js"
+    "clean": "rimraf dist src/*.js test/*.js"
   },
   "author": "Rizadh Nizam",
   "repository": {
