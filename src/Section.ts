@@ -1,6 +1,6 @@
-import Session from './Session';
+import {Session} from './Session';
 
-export default class Section {
+export class Section {
   public constructor(public readonly identifier: string, public readonly sessions: Set<Session>) { }
 
   public overlaps(other: Section): boolean {

@@ -1,8 +1,8 @@
-import Section from './Section';
+import { Section } from './Section';
 
 type SectionCombination = Map<Course, Section>;
 
-export default class Course {
+export class Course {
   public constructor(public readonly code: string, public readonly sections: Set<Section>) { }
 
   private static sectionCombinations(courses: Set<Course>): Set<SectionCombination> {

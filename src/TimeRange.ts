@@ -1,6 +1,6 @@
-import Time from './Time';
+import {Time} from './Time';
 
-export default class TimeRange {
+export class TimeRange {
     public constructor(public readonly start: Time, public readonly end: Time) {
         if (!start.isBefore(end)) {
             throw Error(`Provided time range is invalid. Start time (${start}) must be before end time (${end}).`)

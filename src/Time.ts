@@ -1,4 +1,4 @@
-export default class Time {
+export class Time {
   private static HOUR_TO_MINUTES: number = 60;
   public constructor(public readonly hour: number, public readonly minute: number) { }
 

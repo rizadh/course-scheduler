@@ -1,8 +1,8 @@
-import Course from './Course';
-import Section from './Section';
-import Session, { ILocation } from './Session';
-import Time, { Day } from './Time';
-import TimeRange from './TimeRange';
+import { Course } from './Course';
+import { Section } from './Section';
+import { Session, ILocation } from './Session';
+import { Time, Day } from './Time';
+import { TimeRange } from './TimeRange';
 
 class BadFormatError extends Error { }
 
