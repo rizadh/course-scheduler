@@ -1,6 +1,6 @@
 {
   "name": "course-scheduler",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generate course schedules",
   "main": "dist/main.js",
   "dependencies": {},
