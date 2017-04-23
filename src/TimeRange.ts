@@ -1,3 +1,4 @@
+import { InvalidTimeRangeError } from './InvalidTimeRangeError';
 import { Time } from './Time';
 
 export class TimeRange {
@@ -13,11 +14,5 @@ export class TimeRange {
         }
 
         return false;
-    }
-}
-
-export class InvalidTimeRangeError extends Error {
-    constructor(start: Time, end: Time) {
-        super(`Provided time range is invalid. Start time (${start}) must be before end time (${end}).`)
     }
 }

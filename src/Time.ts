@@ -1,3 +1,5 @@
+import { InvalidTimeValueError } from './InvalidTimeValueError';
+
 export class Time {
   private static MINUTES_PER_HOUR = 60;
 
@@ -35,12 +37,6 @@ export class Time {
 
   private compare(other: Time): number {
     return this.toMinutes() - other.toMinutes();
-  }
-}
-
-export class InvalidTimeValueError extends Error {
-  constructor(unit: string, providedValue: number) {
-    super(`Cannot create a valid time with provided ${unit} value: ${providedValue}`);
   }
 }
 

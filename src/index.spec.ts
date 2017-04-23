@@ -3,8 +3,10 @@
 import { should } from 'chai';
 import 'mocha';
 
-import { Time, InvalidTimeValueError } from './Time';
-import { TimeRange, InvalidTimeRangeError } from './TimeRange';
+import {InvalidTimeRangeError} from './InvalidTimeRangeError';
+import {InvalidTimeValueError} from './InvalidTimeValueError';
+import {Time} from './Time';
+import {TimeRange} from './TimeRange';
 
 // Extend Object.prototype with 'should'
 should();
@@ -155,8 +157,8 @@ describe('Time', () => {
       for (const [time, expected] of expectedValues) {
         time.toString().should.equal(expected);
       }
-    })
-  })
+    });
+  });
 });
 
 describe('TimeRange', () => {
@@ -226,4 +228,4 @@ describe('TimeRange', () => {
       morningToNoon.overlaps(noonToEvening).should.be.false;
     });
   });
-})
+});
