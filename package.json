@@ -1,6 +1,6 @@
 {
   "name": "@rizadh/scheduler",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Generate course schedules",
   "main": "dist/index.js",
   "dependencies": {
