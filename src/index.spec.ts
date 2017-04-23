@@ -17,7 +17,7 @@ describe('Time', () => {
   const latest = new Time(23, 59);
 
   describe('new Time()', () => {
-    it(`should create an instance with valid hour and minute values`, () => {
+    it(`should create an instance with the correct hour and minute`, () => {
       const hourMinuteCombinations = [
         [0, 0],
         [6, 15],
@@ -65,7 +65,7 @@ describe('Time', () => {
   });
 
   describe('isBefore()', () => {
-    it('should return true when time is before', () => {
+    it('should return true when the first time is before the second', () => {
       earlier.isBefore(slightlyLater).should.be.true;
       slightlyLater.isBefore(later).should.be.true;
       earlier.isBefore(later).should.be.true;
@@ -74,7 +74,7 @@ describe('Time', () => {
       earliest.isBefore(latest).should.be.true;
     });
 
-    it('should return false when time is after', () => {
+    it('should return false when the first time is after the second', () => {
       slightlyLater.isBefore(earlier).should.be.false;
       later.isBefore(slightlyLater).should.be.false;
       later.isBefore(earlier).should.be.false;
@@ -83,13 +83,13 @@ describe('Time', () => {
       latest.isBefore(earliest).should.be.false;
     });
 
-    it('should return false when time is equal', () => {
+    it('should return false when the times are equal', () => {
       earlier.isBefore(earlier).should.be.false;
     });
   });
 
   describe('isAfter()', () => {
-    it('should return true when time is after', () => {
+    it('should return true when first time is after second', () => {
       slightlyLater.isAfter(earlier).should.be.true;
       later.isAfter(slightlyLater).should.be.true;
       later.isAfter(earlier).should.be.true;
@@ -98,7 +98,7 @@ describe('Time', () => {
       latest.isAfter(earliest).should.be.true;
     });
 
-    it('should return false when time is before', () => {
+    it('should return false when the first time is before the second', () => {
       earlier.isAfter(slightlyLater).should.be.false;
       slightlyLater.isAfter(later).should.be.false;
       earlier.isAfter(later).should.be.false;
@@ -107,13 +107,13 @@ describe('Time', () => {
       earliest.isAfter(latest).should.be.false;
     });
 
-    it('should return false when time is equal', () => {
+    it('should return false when the times are equal', () => {
       earlier.isAfter(earlier).should.be.false;
     });
   });
 
   describe('isEqualTo()', () => {
-    it('should return true when time is after', () => {
+    it('should return true when the first time is after the second', () => {
       earlier.isEqualTo(slightlyLater).should.be.false;
       slightlyLater.isEqualTo(later).should.be.false;
       earlier.isEqualTo(later).should.be.false;
@@ -122,7 +122,7 @@ describe('Time', () => {
       earliest.isEqualTo(latest).should.be.false;
     });
 
-    it('should return false when time is before', () => {
+    it('should return false when the first time is before the second', () => {
       earlier.isEqualTo(slightlyLater).should.be.false;
       slightlyLater.isEqualTo(later).should.be.false;
       earlier.isEqualTo(later).should.be.false;
@@ -131,7 +131,7 @@ describe('Time', () => {
       earliest.isEqualTo(latest).should.be.false;
     });
 
-    it('should return true when time is equal', () => {
+    it('should return true when the times are equal', () => {
       earlier.isEqualTo(earlier).should.be.true;
     });
   });
