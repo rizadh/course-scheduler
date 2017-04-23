@@ -4,6 +4,7 @@ import { should } from 'chai';
 import 'mocha';
 
 import { Time, InvalidTimeValueError } from './Time';
+import { TimeRange, InvalidTimeRangeError } from './TimeRange';
 
 // Extend Object.prototype with 'should'
 should();
@@ -157,3 +158,72 @@ describe('Time', () => {
     })
   })
 });
+
+describe('TimeRange', () => {
+  const earliest = new Time(0, 0);
+  const latest = new Time(23, 59);
+
+  describe('new TimeRange()', () => {
+    it('should create an instance with the correct start and end', () => {
+      const timeRange = new TimeRange(earliest, latest);
+
+      timeRange.start.should.equal(earliest);
+      timeRange.end.should.equal(latest);
+    });
+
+    it('should allow creating a valid time range', () => {
+      (() => new TimeRange(new Time(1, 0), new Time(2, 0))).should.not.throw(InvalidTimeRangeError);
+      (() => new TimeRange(new Time(0, 1), new Time(0, 2))).should.not.throw(InvalidTimeRangeError);
+    });
+
+    it('should not allow creating an impossible time range', () => {
+      (() => new TimeRange(new Time(2, 0), new Time(1, 0))).should.throw(InvalidTimeRangeError);
+      (() => new TimeRange(new Time(0, 2), new Time(0, 1))).should.throw(InvalidTimeRangeError);
+    });
+
+    it('should not allow creating a zero-length time range', () => {
+      (() => new TimeRange(earliest, earliest)).should.throw(InvalidTimeRangeError);
+      (() => new TimeRange(latest, latest)).should.throw(InvalidTimeRangeError);
+    });
+  });
+
+  describe('overlaps()', () => {
+    const midnightToMorning = new TimeRange(new Time(0, 0), new Time(6, 0));
+    const midnightToNoon = new TimeRange(new Time(0, 0), new Time(12, 0));
+    const midnightToEvening = new TimeRange(new Time(0, 0), new Time(18, 0));
+    const morningToNoon = new TimeRange(new Time(6, 0), new Time(12, 0));
+    const morningToEvening = new TimeRange(new Time(6, 0), new Time(18, 0));
+    const noonToEvening = new TimeRange(new Time(12, 0), new Time(18, 0));
+
+    it('should return true when the ranges overlap', () => {
+      midnightToNoon.overlaps(morningToEvening).should.be.true;
+      morningToEvening.overlaps(midnightToNoon).should.be.true;
+    });
+
+    it('should return true when one range is within the other', () => {
+      midnightToEvening.overlaps(midnightToMorning).should.be.true;
+      midnightToEvening.overlaps(morningToNoon).should.be.true;
+      midnightToEvening.overlaps(noonToEvening).should.be.true;
+
+      midnightToMorning.overlaps(midnightToEvening).should.be.true;
+      morningToNoon.overlaps(midnightToEvening).should.be.true;
+      noonToEvening.overlaps(midnightToEvening).should.be.true;
+    });
+
+    it('should return true when the ranges are the same', () => {
+      midnightToMorning.overlaps(midnightToMorning).should.be.true;
+      midnightToNoon.overlaps(midnightToNoon).should.be.true;
+      midnightToEvening.overlaps(midnightToEvening).should.be.true;
+      morningToNoon.overlaps(morningToNoon).should.be.true;
+      morningToEvening.overlaps(morningToEvening).should.be.true;
+      noonToEvening.overlaps(noonToEvening).should.be.true;
+    });
+
+    it('should return false when the ranges are adjacent', () => {
+      midnightToMorning.overlaps(morningToNoon).should.be.false;
+      midnightToMorning.overlaps(morningToEvening).should.be.false;
+      midnightToNoon.overlaps(noonToEvening).should.be.false;
+      morningToNoon.overlaps(noonToEvening).should.be.false;
+    });
+  });
+})
