@@ -1,4 +1,5 @@
-import { generateCourses, parseCourses, Course } from './index';
+/* tslint:disable:no-console */
+import { Course, generateCourses, parseCourses } from './index';
 
 for (let i = 0; i < 100; i++) {
     const sample = [...generateCourses(3)];
