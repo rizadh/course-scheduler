@@ -24,7 +24,9 @@ export class Time {
   }
 
   public toString() {
-    return `${this.hour}:${this.minute}`;
+    const hourString = this.hour < 10 ? `0${this.hour}` : this.hour;
+    const minuteString = this.minute < 10 ? `0${this.minute}` : this.minute;
+    return `${hourString}:${minuteString}`;
   }
 
   private toMinutes(): number {

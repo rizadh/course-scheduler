@@ -135,4 +135,25 @@ describe('Time', () => {
       earlier.isEqualTo(earlier).should.be.true;
     });
   });
+
+  describe('toString()', () => {
+    it('should create a properly formatted 24-hour time string', () => {
+      const expectedValues = [
+        [new Time(0, 0), '00:00'],
+        [new Time(11, 11), '11:11'],
+
+        [new Time(11, 0), '11:00'],
+        [new Time(1, 0), '01:00'],
+        [new Time(10, 0), '10:00'],
+
+        [new Time(0, 11), '00:11'],
+        [new Time(0, 1), '00:01'],
+        [new Time(0, 10), '00:10'],
+      ];
+
+      for (const [time, expected] of expectedValues) {
+        time.toString().should.equal(expected);
+      }
+    })
+  })
 });
