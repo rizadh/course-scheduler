@@ -30,7 +30,7 @@ function randomDay() {
 }
 
 function generateSession() {
-    const start = Math.floor(Math.random() * NUM_INTERVALS - 1);
+    const start = Math.floor(Math.random() * (NUM_INTERVALS - 1));
     const end = start + Math.ceil(Math.random() * (NUM_INTERVALS - start - 1));
 
     return {

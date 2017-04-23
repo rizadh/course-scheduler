@@ -1,4 +1,4 @@
-import { generateCourses, parseCourses, Course } from './main';
+import { generateCourses, parseCourses, Course } from './index';
 
 for (let i = 0; i < 100; i++) {
     const sample = [...generateCourses(5)];
