@@ -1,7 +1,7 @@
 // Settable
-const MINUTE_PER_INTERVAL = 30;
+const MINUTE_PER_INTERVAL = 10;
 const SECTIONS_PER_COURSE = 3;
-const SESSIONS_PER_SECTION = 5;
+const SESSIONS_PER_SECTION = 3;
 const RANDOM_STRING_LENGTH = 5;
 
 // Time conversions
@@ -41,12 +41,12 @@ function generateSession() {
         },
         start: {
             hour: Math.floor(start / INTERVALS_PER_HOUR),
-            minute: MINUTE_PER_INTERVAL * (start % 2),
+            minute: MINUTE_PER_INTERVAL * (start % INTERVALS_PER_HOUR),
         },
         // tslint:disable:object-literal-sort-keys
         end: {
-            hour: Math.floor(end / 2),
-            minute: MINUTE_PER_INTERVAL * (end % 2),
+            hour: Math.floor(end / INTERVALS_PER_HOUR),
+            minute: MINUTE_PER_INTERVAL * (end % INTERVALS_PER_HOUR),
         },
     };
 }

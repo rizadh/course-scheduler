@@ -1,7 +1,7 @@
 import { generateCourses, parseCourses, Course } from './index';
 
 for (let i = 0; i < 100; i++) {
-    const sample = [...generateCourses(5)];
+    const sample = [...generateCourses(3)];
 
     const parsedCourses = parseCourses(sample);
 
