@@ -3,10 +3,10 @@
 import { should } from 'chai';
 import 'mocha';
 
-import {InvalidTimeRangeError} from './InvalidTimeRangeError';
-import {InvalidTimeValueError} from './InvalidTimeValueError';
-import {Time} from './Time';
-import {TimeRange} from './TimeRange';
+import { InvalidTimeRangeError } from './InvalidTimeRangeError';
+import { InvalidTimeValueError } from './InvalidTimeValueError';
+import { Time } from './Time';
+import { TimeRange } from './TimeRange';
 
 // Extend Object.prototype with 'should'
 should();
@@ -203,29 +203,42 @@ describe('TimeRange', () => {
     });
 
     it('should return true when one range is within the other', () => {
-      midnightToEvening.overlaps(midnightToMorning).should.be.true;
-      midnightToEvening.overlaps(morningToNoon).should.be.true;
-      midnightToEvening.overlaps(noonToEvening).should.be.true;
+      const outer = midnightToEvening;
+      const inner = morningToNoon;
+      const leading = midnightToMorning;
+      const trailing = noonToEvening;
 
-      midnightToMorning.overlaps(midnightToEvening).should.be.true;
-      morningToNoon.overlaps(midnightToEvening).should.be.true;
-      noonToEvening.overlaps(midnightToEvening).should.be.true;
+      outer.overlaps(inner).should.be.true;
+      outer.overlaps(leading).should.be.true;
+      outer.overlaps(trailing).should.be.true;
+
+      inner.overlaps(outer).should.be.true;
+      leading.overlaps(outer).should.be.true;
+      trailing.overlaps(outer).should.be.true;
     });
 
     it('should return true when the ranges are the same', () => {
-      midnightToMorning.overlaps(midnightToMorning).should.be.true;
-      midnightToNoon.overlaps(midnightToNoon).should.be.true;
-      midnightToEvening.overlaps(midnightToEvening).should.be.true;
-      morningToNoon.overlaps(morningToNoon).should.be.true;
-      morningToEvening.overlaps(morningToEvening).should.be.true;
-      noonToEvening.overlaps(noonToEvening).should.be.true;
+      const timeRanges = [
+        midnightToMorning,
+        midnightToNoon,
+        midnightToEvening,
+        morningToNoon,
+        morningToEvening,
+        noonToEvening,
+      ];
+
+      for (const timeRange of timeRanges) {
+        timeRange.overlaps(timeRange).should.be.true;
+      }
     });
 
     it('should return false when the ranges are adjacent', () => {
       midnightToMorning.overlaps(morningToNoon).should.be.false;
-      midnightToMorning.overlaps(morningToEvening).should.be.false;
-      midnightToNoon.overlaps(noonToEvening).should.be.false;
       morningToNoon.overlaps(noonToEvening).should.be.false;
+    });
+
+    it('should return false when the ranges are separated by some time interval', () => {
+      midnightToMorning.overlaps(noonToEvening).should.be.false;
     });
   });
 });
