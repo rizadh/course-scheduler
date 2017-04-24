@@ -17,7 +17,7 @@
     "install": "npm run build",
     "build": "tsc",
     "lint": "tslint --project tsconfig.json --type-check src/**/*",
-    "test": "mocha dist/*.spec.js",
+    "test": "npm run build && mocha dist/*.spec.js",
     "clean": "rimraf dist src/*.js test/*.js"
   },
   "author": "Rizadh Nizam",
