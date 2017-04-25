@@ -20,6 +20,14 @@ export class Time {
     return new Time(source.hour, source.minute);
   }
 
+  public static fromMinutes(minutes: number): Time {
+    if (minutes < 0 || minutes >= 24 * 60 || minutes % 1 !== 0) {
+      throw new InvalidTimeValueError('minutes', minutes);
+    }
+
+    return new Time(Math.floor(minutes / 60), minutes % 60);
+  }
+
   private static MINUTES_PER_HOUR = 60;
 
   public constructor(public readonly hour: number, public readonly minute: number) {
@@ -57,7 +65,7 @@ export class Time {
     return `${hourString}:${minuteString}`;
   }
 
-  private toMinutes(): number {
+  public toMinutes(): number {
     return this.hour * Time.MINUTES_PER_HOUR + this.minute;
   }
 
