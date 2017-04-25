@@ -139,6 +139,25 @@ describe('Time', () => {
     });
   });
 
+  describe('fromJson()', () => {
+    it('should create a corresponding instance when given a valid object');
+    it('should throw an error when given an invalid object');
+    it('should throw an error when given an invalid values');
+  })
+
+  describe('toJson()', () => {
+    it('should create a valid methodless object representation of itself');
+  });
+
+  describe('fromMinutes()', () => {
+    it('should create a corresponding instance when given a valid value');
+    it('should throw an error when given an invalid value');
+  });
+
+  describe('toMinutes()', () => {
+    it('should return the corresponding number of minutes since midnight');
+  });
+
   describe('toString()', () => {
     it('should create a properly formatted 24-hour time string', () => {
       const expectedValues = [
