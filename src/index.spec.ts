@@ -181,15 +181,15 @@ describe('Time', () => {
 });
 
 describe('TimeRange', () => {
-  const earliest = new Time(0, 0);
-  const latest = new Time(23, 59);
+  const timeA = new Time(6, 15);
+  const timeB = new Time(18, 45);
 
   describe('new TimeRange()', () => {
     it('should create an instance with the correct start and end', () => {
-      const timeRange = new TimeRange(earliest, latest);
+      const timeRange = new TimeRange(timeA, timeB);
 
-      timeRange.start.should.equal(earliest);
-      timeRange.end.should.equal(latest);
+      timeRange.start.should.equal(timeA);
+      timeRange.end.should.equal(timeB);
     });
 
     it('should allow creating a valid time range', () => {
@@ -203,8 +203,8 @@ describe('TimeRange', () => {
     });
 
     it('should not allow creating a zero-length time range', () => {
-      (() => new TimeRange(earliest, earliest)).should.throw(InvalidTimeRangeError);
-      (() => new TimeRange(latest, latest)).should.throw(InvalidTimeRangeError);
+      (() => new TimeRange(timeA, timeA)).should.throw(InvalidTimeRangeError);
+      (() => new TimeRange(timeB, timeB)).should.throw(InvalidTimeRangeError);
     });
   });
 
