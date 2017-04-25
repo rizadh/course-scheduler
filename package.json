@@ -18,6 +18,7 @@
     "build": "tsc",
     "lint": "tslint --project tsconfig.json --type-check src/**/*",
     "test": "npm run build && mocha dist/*.spec.js",
+    "demo": "node dist/demo.js",
     "clean": "rimraf dist src/*.js test/*.js"
   },
   "author": "Rizadh Nizam",
