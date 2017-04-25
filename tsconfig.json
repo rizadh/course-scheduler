@@ -3,6 +3,10 @@
         "module": "commonjs",
         "target": "es2015",
         "outDir": "./dist",
+        "lib": [
+            "ES2017",
+            "DOM"
+        ],
         "strictNullChecks": true,
         "alwaysStrict": true,
         "noImplicitAny": true,

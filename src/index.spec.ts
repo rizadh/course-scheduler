@@ -5,6 +5,7 @@ import 'mocha';
 
 import { InvalidTimeRangeError } from './InvalidTimeRangeError';
 import { InvalidTimeValueError } from './InvalidTimeValueError';
+import { BadFormatError } from './BadFormatError';
 import { Time } from './Time';
 import { TimeRange } from './TimeRange';
 
@@ -140,22 +141,104 @@ describe('Time', () => {
   });
 
   describe('fromJson()', () => {
-    it('should create a corresponding instance when given a valid object');
-    it('should throw an error when given an invalid object');
-    it('should throw an error when given an invalid values');
+    it('should create a corresponding instance when given a valid object', () => {
+      const source = {
+        hour: 5,
+        minute: 30,
+      };
+
+      const time = Time.fromJson(source);
+
+      time.hour.should.equal(source.hour);
+      time.minute.should.equal(source.minute);
+
+    });
+
+    it('should not throw an error when given an object with extra properties', () => {
+      const source = {
+        hour: 5,
+        minute: 30,
+        second: 5,
+      };
+
+      const timeInstance = new Time(5, 30);
+
+      (() => Time.fromJson(source)).should.not.throw(BadFormatError);
+      (() => Time.fromJson(timeInstance)).should.not.throw(BadFormatError);
+    });
+
+    it('should throw an error when given an object with missing properties', () => {
+      const sources = [
+        {},
+        {
+          hour: 5,
+        },
+        {
+          minute: 5,
+        }
+      ];
+
+      let a = sources.map(source => ({ second: 5, ...source }));
+
+      for (const source of a) {
+        (() => Time.fromJson(source)).should.throw(BadFormatError);
+        (() => Time.fromJson({ second: 5, ...source })).should.throw(BadFormatError);
+      }
+    });
+
+    it('should throw an error when given an array', () => {
+      (() => Time.fromJson([])).should.throw(BadFormatError);
+    });
+
+    it('should throw an error when given a number', () => {
+      (() => Time.fromJson(2)).should.throw(BadFormatError);
+    });
+
+    it('should throw an error when given a boolean', () => {
+      (() => Time.fromJson(true)).should.throw(BadFormatError);
+    });
+
+    it('should throw an error when given objects with invalid values', () => {
+      (() => Time.fromJson({ hour: 24, minute: 0 })).should.throw(InvalidTimeValueError);
+      (() => Time.fromJson({ hour: 0, minute: 60 })).should.throw(InvalidTimeValueError);
+    });
   })
 
   describe('toJson()', () => {
-    it('should create a valid methodless object representation of itself');
+    it('should create a valid methodless object representation of itself', () => {
+      const time = new Time(17, 30);
+
+      const jsonTime = time.toJson();
+
+      jsonTime.hour.should.equal(time.hour);
+      jsonTime.minute.should.equal(time.minute);
+
+      for (const key of Object.keys(jsonTime)) {
+        ['hour', 'minute'].includes(key);
+      }
+    });
   });
 
   describe('fromMinutes()', () => {
-    it('should create a corresponding instance when given a valid value');
-    it('should throw an error when given an invalid value');
+    it('should create a corresponding instance when given a valid value', () => {
+      const time = Time.fromMinutes(500);
+
+      time.hour.should.equal(8);
+      time.minute.should.equal(20);
+    });
+    it('should throw an error when given an invalid value', () => {
+      (() => Time.fromMinutes(-1)).should.throw(InvalidTimeValueError);
+      (() => Time.fromMinutes(60 * 24)).should.throw(InvalidTimeValueError);
+      (() => Time.fromMinutes(2.5)).should.throw(InvalidTimeValueError);
+    });
   });
 
   describe('toMinutes()', () => {
-    it('should return the corresponding number of minutes since midnight');
+    it('should return the corresponding number of minutes since midnight', () => {
+      const time = new Time(5, 5).toMinutes();
+
+      time.should.equal(5 * 60 + 5);
+    });
   });
 
   describe('toString()', () => {
