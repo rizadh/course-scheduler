@@ -1,6 +1,5 @@
 export * from './Course';
 export * from './CourseGenerator';
-export * from './CourseParser';
 export * from './InvalidTimeRangeError';
 export * from './InvalidTimeValueError';
 export * from './Section';
