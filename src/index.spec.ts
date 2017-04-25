@@ -37,12 +37,20 @@ describe('Time', () => {
       }
     });
 
-    it('should not allow creating times with invalid hour values', () => {
+    it('should not allow creating times with negative hour values', () => {
       const invalidHours = [
         -Infinity,
         -100,
         -1,
-        2.5,
+      ];
+
+      for (const hour of invalidHours) {
+        (() => new Time(hour, 0)).should.throw(InvalidTimeValueError);
+      }
+    });
+
+    it('should not allow creating times with too high hour values', () => {
+      const invalidHours = [
         24,
         100,
         Infinity,
@@ -53,15 +61,47 @@ describe('Time', () => {
       }
     });
 
-    it('should not allow creating times with invalid minute values', () => {
+    it('should not allow creating times with non-integer hour values', () => {
+      const invalidHours = [
+        0.1,
+        12.2,
+        23.5,
+      ];
+
+      for (const hour of invalidHours) {
+        (() => new Time(hour, 0)).should.throw(InvalidTimeValueError);
+      }
+    });
+
+    it('should not allow creating times with negative minute values', () => {
       const invalidMinutes = [
         -Infinity,
         -100,
-        -1,
-        2.5,
+        -1
+      ];
+
+      for (const minute of invalidMinutes) {
+        (() => new Time(0, minute)).should.throw(InvalidTimeValueError);
+      }
+    });
+
+    it('should not allow creating times with too high minute values', () => {
+      const invalidMinutes = [
         60,
         100,
         Infinity,
+      ];
+
+      for (const minute of invalidMinutes) {
+        (() => new Time(0, minute)).should.throw(InvalidTimeValueError);
+      }
+    });
+
+    it('should not allow creating times with non-integer minute values', () => {
+      const invalidMinutes = [
+        0.1,
+        30.2,
+        59.5
       ];
 
       for (const minute of invalidMinutes) {
