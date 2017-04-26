@@ -3,9 +3,9 @@
 import { should } from 'chai';
 import 'mocha';
 
+import { BadFormatError } from './BadFormatError';
 import { InvalidTimeRangeError } from './InvalidTimeRangeError';
 import { InvalidTimeValueError } from './InvalidTimeValueError';
-import { BadFormatError } from './BadFormatError';
 import { Time } from './Time';
 import { TimeRange } from './TimeRange';
 
@@ -77,7 +77,7 @@ describe('Time', () => {
       const invalidMinutes = [
         -Infinity,
         -100,
-        -1
+        -1,
       ];
 
       for (const minute of invalidMinutes) {
@@ -101,7 +101,7 @@ describe('Time', () => {
       const invalidMinutes = [
         0.1,
         30.2,
-        59.5
+        59.5,
       ];
 
       for (const minute of invalidMinutes) {
@@ -217,12 +217,10 @@ describe('Time', () => {
         },
         {
           minute: 5,
-        }
+        },
       ];
 
-      let a = sources.map(source => ({ second: 5, ...source }));
-
-      for (const source of a) {
+      for (const source of sources) {
         (() => Time.fromJson(source)).should.throw(BadFormatError);
         (() => Time.fromJson({ second: 5, ...source })).should.throw(BadFormatError);
       }
@@ -244,7 +242,7 @@ describe('Time', () => {
       (() => Time.fromJson({ hour: 24, minute: 0 })).should.throw(InvalidTimeValueError);
       (() => Time.fromJson({ hour: 0, minute: 60 })).should.throw(InvalidTimeValueError);
     });
-  })
+  });
 
   describe('toJson()', () => {
     it('should create a valid methodless object representation of itself', () => {
