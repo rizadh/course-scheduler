@@ -1,4 +1,4 @@
-# Scheduler
+# Scheduler [![Build Status](https://travis-ci.org/rizadh/scheduler.svg?branch=master)](https://travis-ci.org/rizadh/scheduler)
 
 A simple course auto-scheduler. Feed in an array describing each course (format below) and receive a set of possible
 non-conflicting course sections.
