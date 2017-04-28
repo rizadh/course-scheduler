@@ -6,6 +6,7 @@ import 'mocha';
 import { BadFormatError } from './BadFormatError';
 import { InvalidTimeRangeError } from './InvalidTimeRangeError';
 import { InvalidTimeValueError } from './InvalidTimeValueError';
+import { Day, Session } from './Session';
 import { Time } from './Time';
 import { TimeRange } from './TimeRange';
 
@@ -381,6 +382,81 @@ describe('TimeRange', () => {
 
     it('should return false when the ranges are separated by some time interval', () => {
       midnightToMorning.overlaps(noonToEvening).should.be.false;
+    });
+  });
+});
+
+describe('Session', () => {
+
+  describe('new Session()', () => {
+    it('should allow creating a valid session', () => {
+      (() =>
+        new Session(Day.Monday, { building: 'SAMPLE', room: 100 }, new TimeRange(new Time(0, 0), new Time(1, 1))))
+        .should.not.throw(Error);
+    });
+
+    it('should create a session with the appropriate values', () => {
+      const session = new Session(Day.Monday, { building: 'SAMPLE', room: 100 },
+        new TimeRange(new Time(0, 0), new Time(1, 1)));
+
+      session.location.building.should.equal('SAMPLE');
+      session.location.room.should.equal(100);
+      session.day.should.equal(Day.Monday);
+      session.time.start.hour.should.equal(0);
+      session.time.start.minute.should.equal(0);
+      session.time.end.hour.should.equal(1);
+      session.time.end.minute.should.equal(1);
+    });
+
+    it('should not allow creating a session with an invalid day', () => {
+      const invalidSessions = [
+        () => new Session(-1, { building: 'SAMPLE', room: 100 }, new TimeRange(new Time(0, 0), new Time(1, 1))),
+        () => new Session(6, { building: 'SAMPLE', room: 100 }, new TimeRange(new Time(0, 0), new Time(1, 1))),
+        () => new Session(2.5, { building: 'SAMPLE', room: 100 }, new TimeRange(new Time(0, 0), new Time(1, 1))),
+      ];
+
+      for (const session of invalidSessions) {
+        session.should.throw(InvalidTimeValueError);
+      }
+    });
+  });
+
+  describe('fromJson()', () => {
+    it('should create a session with the correct values');
+    it('should not allow creating a session when day is missing');
+    it('should not allow creating a session when day is invalid');
+    it('should not allow creating a session when location is missing');
+    it('should not allow creating a session when location is invalid');
+  });
+
+  describe('toJson()', () => {
+    it('should return a session with appropriate values');
+  });
+
+  describe('overlaps()', () => {
+    const session = new Session(Day.Monday, { building: 'SAMPLE', room: 100 },
+      new TimeRange(new Time(0, 0), new Time(1, 1)));
+    const differentDaySameTime = new Session(Day.Tuesday, { building: 'SAMPLE', room: 100 },
+      new TimeRange(new Time(0, 0), new Time(1, 1)));
+    const sameDayOverlappingTime = new Session(Day.Monday, { building: 'SAMPLE', room: 100 },
+      new TimeRange(new Time(0, 30), new Time(1, 30)));
+    const sameDayNonOverlappingTime = new Session(Day.Monday, { building: 'SAMPLE', room: 100 },
+      new TimeRange(new Time(2, 0), new Time(3, 0)));
+
+    context('when sessions are on the same day', () => {
+      it('should return true when times overlap', () => {
+        session.overlaps(sameDayOverlappingTime).should.be.true;
+      });
+
+      it('should return false when times do not overlap', () => {
+        session.overlaps(sameDayNonOverlappingTime).should.be.false;
+      });
+    });
+
+    context('when sessions are on different days', () => {
+      it('should return false', () => {
+        session.overlaps(differentDaySameTime).should.be.false;
+      });
     });
   });
 });
