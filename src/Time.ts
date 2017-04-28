@@ -73,13 +73,3 @@ export class Time {
     return this.toMinutes() - other.toMinutes();
   }
 }
-
-export enum Day {
-  Sunday,
-  Monday,
-  Tuesday,
-  Wednesday,
-  Thursday,
-  Friday,
-  Saturday,
-}

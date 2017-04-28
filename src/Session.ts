@@ -1,6 +1,6 @@
 import { BadFormatError } from './BadFormatError';
 import { DeepPartial } from './DeepPartial';
-import { Day, ITime, Time } from './Time';
+import { ITime, Time } from './Time';
 import { TimeRange } from './TimeRange';
 
 export interface ILocation {
@@ -13,6 +13,16 @@ export interface ISession {
   location: ILocation;
   start: ITime;
   end: ITime;
+}
+
+export enum Day {
+  Sunday,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
 }
 
 export class Session {

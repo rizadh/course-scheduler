@@ -1,7 +1,7 @@
 import { Course } from './Course';
 import { Section } from './Section';
-import { Session } from './Session';
-import { Day, Time } from './Time';
+import { Day, Session } from './Session';
+import { Time } from './Time';
 import { TimeRange } from './TimeRange';
 
 // Settable - Course layout
