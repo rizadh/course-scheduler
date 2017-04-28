@@ -1,5 +1,6 @@
 import { BadFormatError } from './BadFormatError';
 import { DeepPartial } from './DeepPartial';
+import { InvalidTimeValueError } from './InvalidTimeValueError';
 import { ITime, Time } from './Time';
 import { TimeRange } from './TimeRange';
 
@@ -15,7 +16,7 @@ export interface ISession {
   end: ITime;
 }
 
-export enum Day {
+export const enum Day {
   Sunday,
   Monday,
   Tuesday,
@@ -82,7 +83,11 @@ export class Session {
     return location as ILocation;
   }
 
-  public constructor(public readonly day: Day, public readonly location: ILocation, public readonly time: TimeRange) { }
+  public constructor(public readonly day: Day, public readonly location: ILocation, public readonly time: TimeRange) {
+    if (![Day.Monday, Day.Tuesday, Day.Wednesday, Day.Thursday, Day.Friday].includes(day)) {
+      throw new InvalidTimeValueError('day', day);
+    }
+  }
 
   public overlaps(other: Session): boolean {
     return this.day === other.day && this.time.overlaps(other.time);
