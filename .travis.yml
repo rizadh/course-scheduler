@@ -4,4 +4,5 @@ node_js:
 env:
   - TEST_COMMAND=test
   - TEST_COMMAND=lint
+  - TEST_COMMAND=demo
 script: npm run $TEST_COMMAND
