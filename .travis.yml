@@ -4,5 +4,4 @@ node_js:
 env:
   - TEST_COMMAND=test
   - TEST_COMMAND=lint
-before_script: if [ $TEST_COMMAND == test ]; then npm run build; fi
 script: npm run $TEST_COMMAND

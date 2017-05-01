@@ -15,8 +15,9 @@
   "devDependencies": {},
   "scripts": {
     "build": "tsc",
+    "test-only": "mocha dist/*.spec.js",
     "lint": "tslint --project tsconfig.json --type-check src/**/*",
-    "test": "mocha dist/*.spec.js",
+    "test": "npm run build && npm run test",
     "demo": "node dist/demo.js",
     "clean": "rimraf dist src/*.js test/*.js"
   },
