@@ -15,6 +15,8 @@ for (let i = 0; i < 100; i++) {
         });
 
         console.log(`Iteration ${i}`);
-        break;
+        process.exit(0);
     }
 }
+
+process.exit(1);
