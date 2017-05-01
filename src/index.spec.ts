@@ -460,3 +460,49 @@ describe('Session', () => {
     });
   });
 });
+
+describe('Section', () => {
+  describe('new Section()', () => {
+    it('should create an instance with the given values');
+    it('should not allow creating a section with overlapping sessions');
+  });
+
+  describe('fromJson()', () => {
+    it('should create an instance with given values');
+    it('should allow creating an instance from a valid object');
+    it('should allow creating an instance from a superset of require object properties');
+    it('should now allow creating an instance from an object with missing require properties');
+  });
+
+  describe('toJson()', () => {
+    it('should create a simple object representing the section');
+  });
+
+  describe('new Section()', () => {
+    it('should create a section with the appropriate values');
+    it('should not allow creating a section with overlapping sessions');
+  });
+});
+
+describe('Course', () => {
+  describe('new Course()', () => {
+    it('should create an instance with the given values');
+    it('should not allow creating a course with duplicate section identifiers');
+  });
+
+  describe('fromJson()', () => {
+    it('should create an instance with given values');
+    it('should allow creating an instance from a valid object');
+    it('should allow creating an instance from a superset of require object properties');
+    it('should now allow creating an instance from an object with missing require properties');
+  });
+
+  describe('toJson()', () => {
+    it('should create a simple object representing the course');
+  });
+
+  describe('new Section()', () => {
+    it('should create a section with the appropriate values');
+    it('should not allow creating a section with overlapping sessions');
+  });
+});
