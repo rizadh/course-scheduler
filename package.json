@@ -18,9 +18,9 @@
     "build": "tsc",
     "test-only": "mocha dist/*.spec.js",
     "lint": "tslint --project tsconfig.json --type-check src/**/*",
-    "test": "npm run build && npm run test",
+    "test": "npm run build && npm run test-only",
     "demo-only": "node dist/demo.js",
-    "demo": "npm run build && node dist/demo.js",
+    "demo": "npm run build && npm run demo-only",
     "clean": "rimraf dist src/*.js test/*.js"
   },
   "author": "Rizadh Nizam",
