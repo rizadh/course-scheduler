@@ -14,234 +14,113 @@ import { TimeRange } from './TimeRange';
 should();
 
 describe('Time', () => {
-  const earlier = new Time(2, 0);
-  const slightlyLater = new Time(2, 30);
-  const later = new Time(3, 0);
-
-  const earliest = new Time(0, 0);
-  const latest = new Time(23, 59);
+  const base = new Time(6, 30);
+  const earlierHour = new Time(0, 30);
+  const earlierMinute = new Time(6, 15);
+  const laterHour = new Time(12, 30);
+  const laterMinute = new Time(6, 45);
 
   describe('new Time()', () => {
-    it(`should create an instance with the correct hour and minute`, () => {
-      const hourMinuteCombinations = [
-        [0, 0],
-        [6, 15],
-        [12, 35],
-        [18, 45],
-        [23, 59],
-      ];
-
-      for (const [hour, minute] of hourMinuteCombinations) {
-        const time = new Time(hour, minute);
-        time.hour.should.equal(hour);
-        time.minute.should.equal(minute);
-      }
+    context('valid values', () => {
+      it(`should create an instance with the correct hour and minute`, () => {
+        base.hour.should.equal(6);
+        base.minute.should.equal(30);
+      });
     });
 
-    it('should not allow creating times with negative hour values', () => {
-      const invalidHours = [
-        -Infinity,
-        -100,
-        -1,
-      ];
+    context('invalid hour value', () => {
+      it('should not allow creating times with negative hour values', () => {
+        (() => new Time(-1, 0)).should.throw(InvalidTimeValueError);
+      });
 
-      for (const hour of invalidHours) {
-        (() => new Time(hour, 0)).should.throw(InvalidTimeValueError);
-      }
+      it('should not allow creating times with too high hour values', () => {
+        (() => new Time(24, 0)).should.throw(InvalidTimeValueError);
+      });
+
+      it('should not allow creating times with non-integer hour values', () => {
+        (() => new Time(11.5, 0)).should.throw(InvalidTimeValueError);
+      });
     });
 
-    it('should not allow creating times with too high hour values', () => {
-      const invalidHours = [
-        24,
-        100,
-        Infinity,
-      ];
+    context('invalid minute value', () => {
+      it('should not allow creating times with negative minute values', () => {
+        (() => new Time(0, -1)).should.throw(InvalidTimeValueError);
+      });
 
-      for (const hour of invalidHours) {
-        (() => new Time(hour, 0)).should.throw(InvalidTimeValueError);
-      }
-    });
+      it('should not allow creating times with too high minute values', () => {
+        (() => new Time(0, 60)).should.throw(InvalidTimeValueError);
+      });
 
-    it('should not allow creating times with non-integer hour values', () => {
-      const invalidHours = [
-        0.1,
-        12.2,
-        23.5,
-      ];
-
-      for (const hour of invalidHours) {
-        (() => new Time(hour, 0)).should.throw(InvalidTimeValueError);
-      }
-    });
-
-    it('should not allow creating times with negative minute values', () => {
-      const invalidMinutes = [
-        -Infinity,
-        -100,
-        -1,
-      ];
-
-      for (const minute of invalidMinutes) {
-        (() => new Time(0, minute)).should.throw(InvalidTimeValueError);
-      }
-    });
-
-    it('should not allow creating times with too high minute values', () => {
-      const invalidMinutes = [
-        60,
-        100,
-        Infinity,
-      ];
-
-      for (const minute of invalidMinutes) {
-        (() => new Time(0, minute)).should.throw(InvalidTimeValueError);
-      }
-    });
-
-    it('should not allow creating times with non-integer minute values', () => {
-      const invalidMinutes = [
-        0.1,
-        30.2,
-        59.5,
-      ];
-
-      for (const minute of invalidMinutes) {
-        (() => new Time(0, minute)).should.throw(InvalidTimeValueError);
-      }
+      it('should not allow creating times with non-integer minute values', () => {
+        (() => new Time(0, 29.5)).should.throw(InvalidTimeValueError);
+      });
     });
   });
 
   describe('isBefore()', () => {
-    it('should return true when the first time is before the second', () => {
-      earlier.isBefore(slightlyLater).should.be.true;
-      slightlyLater.isBefore(later).should.be.true;
-      earlier.isBefore(later).should.be.true;
-
-      // Midnight case
-      earliest.isBefore(latest).should.be.true;
+    it('should return true when the given time occurs earlier', () => {
+      base.isBefore(laterHour).should.be.true;
+      base.isBefore(laterMinute).should.be.true;
     });
 
-    it('should return false when the first time is after the second', () => {
-      slightlyLater.isBefore(earlier).should.be.false;
-      later.isBefore(slightlyLater).should.be.false;
-      later.isBefore(earlier).should.be.false;
-
-      // Midnight case
-      latest.isBefore(earliest).should.be.false;
+    it('should return false when the given time occurs later', () => {
+      base.isBefore(earlierHour).should.be.false;
+      base.isBefore(earlierMinute).should.be.false;
     });
 
-    it('should return false when the times are equal', () => {
-      earlier.isBefore(earlier).should.be.false;
+    it('should return false when the given time is equal', () => {
+      base.isBefore(base).should.be.false;
     });
   });
 
   describe('isAfter()', () => {
-    it('should return true when first time is after second', () => {
-      slightlyLater.isAfter(earlier).should.be.true;
-      later.isAfter(slightlyLater).should.be.true;
-      later.isAfter(earlier).should.be.true;
-
-      // Midnight case
-      latest.isAfter(earliest).should.be.true;
+    it('should return true when the given time occurs earlier', () => {
+      base.isAfter(earlierHour).should.be.true;
+      base.isAfter(earlierMinute).should.be.true;
     });
 
-    it('should return false when the first time is before the second', () => {
-      earlier.isAfter(slightlyLater).should.be.false;
-      slightlyLater.isAfter(later).should.be.false;
-      earlier.isAfter(later).should.be.false;
-
-      // Midnight case
-      earliest.isAfter(latest).should.be.false;
+    it('should return false when the given time occurs later', () => {
+      base.isAfter(laterHour).should.be.false;
+      base.isAfter(laterMinute).should.be.false;
     });
 
-    it('should return false when the times are equal', () => {
-      earlier.isAfter(earlier).should.be.false;
+    it('should return false when the given time is equal', () => {
+      base.isBefore(base).should.be.false;
     });
   });
 
   describe('isEqualTo()', () => {
-    it('should return true when the first time is after the second', () => {
-      earlier.isEqualTo(slightlyLater).should.be.false;
-      slightlyLater.isEqualTo(later).should.be.false;
-      earlier.isEqualTo(later).should.be.false;
-
-      // Midnight case
-      earliest.isEqualTo(latest).should.be.false;
+    it('should return false when the given time occurs earlier', () => {
+      base.isEqualTo(earlierHour).should.be.false;
+      base.isEqualTo(earlierMinute).should.be.false;
     });
 
-    it('should return false when the first time is before the second', () => {
-      earlier.isEqualTo(slightlyLater).should.be.false;
-      slightlyLater.isEqualTo(later).should.be.false;
-      earlier.isEqualTo(later).should.be.false;
-
-      // Midnight case
-      earliest.isEqualTo(latest).should.be.false;
+    it('should return false when the given time occurs later', () => {
+      base.isEqualTo(laterHour).should.be.false;
+      base.isEqualTo(laterMinute).should.be.false;
     });
 
-    it('should return true when the times are equal', () => {
-      earlier.isEqualTo(earlier).should.be.true;
+    it('should return true when the given time is equal', () => {
+      base.isEqualTo(base).should.be.true;
     });
   });
 
   describe('fromJson()', () => {
     it('should create a corresponding instance when given a valid object', () => {
-      const source = {
+      const time = Time.fromJson({
         hour: 5,
         minute: 30,
-      };
+      });
 
-      const time = Time.fromJson(source);
+      time.hour.should.equal(5);
+      time.minute.should.equal(30);
 
-      time.hour.should.equal(source.hour);
-      time.minute.should.equal(source.minute);
-
-    });
-
-    it('should not throw an error when given an object with extra properties', () => {
-      const source = {
-        hour: 5,
-        minute: 30,
-        second: 5,
-      };
-
-      const timeInstance = new Time(5, 30);
-
-      (() => Time.fromJson(source)).should.not.throw(BadFormatError);
-      (() => Time.fromJson(timeInstance)).should.not.throw(BadFormatError);
     });
 
     it('should throw an error when given an object with missing properties', () => {
-      const sources = [
-        {},
-        {
-          hour: 5,
-        },
-        {
-          minute: 5,
-        },
-      ];
-
-      for (const source of sources) {
-        (() => Time.fromJson(source)).should.throw(BadFormatError);
-        (() => Time.fromJson({ second: 5, ...source })).should.throw(BadFormatError);
-      }
-    });
-
-    it('should throw an error when given an array', () => {
-      (() => Time.fromJson([])).should.throw(BadFormatError);
-    });
-
-    it('should throw an error when given a number', () => {
-      (() => Time.fromJson(2)).should.throw(BadFormatError);
-    });
-
-    it('should throw an error when given a boolean', () => {
-      (() => Time.fromJson(true)).should.throw(BadFormatError);
-    });
-
-    it('should throw an error when given objects with invalid values', () => {
-      (() => Time.fromJson({ hour: 24, minute: 0 })).should.throw(InvalidTimeValueError);
-      (() => Time.fromJson({ hour: 0, minute: 60 })).should.throw(InvalidTimeValueError);
+      (() => Time.fromJson({})).should.throw(BadFormatError);
+      (() => Time.fromJson({ hour: 5, })).should.throw(BadFormatError);
+      (() => Time.fromJson({ minute: 5 })).should.throw(BadFormatError);
     });
   });
 
