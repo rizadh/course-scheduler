@@ -119,7 +119,7 @@ describe('Time', () => {
 
     it('should throw an error when given an object with missing properties', () => {
       (() => Time.fromJson({})).should.throw(BadFormatError);
-      (() => Time.fromJson({ hour: 5, })).should.throw(BadFormatError);
+      (() => Time.fromJson({ hour: 5 })).should.throw(BadFormatError);
       (() => Time.fromJson({ minute: 5 })).should.throw(BadFormatError);
     });
   });
