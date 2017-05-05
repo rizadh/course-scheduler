@@ -301,15 +301,64 @@ describe('Session', () => {
   });
 
   describe('fromJson()', () => {
-    it('should create a session with the correct values');
-    it('should not allow creating a session when day is missing');
-    it('should not allow creating a session when day is invalid');
-    it('should not allow creating a session when location is missing');
-    it('should not allow creating a session when location is invalid');
+    const validJson = {
+      day: 1,
+      location: {
+        building: 'test',
+        room: 100,
+      },
+      start: new Time(0, 10),
+      // tslint:disable-next-line:object-literal-sort-keys
+      end: new Time(2, 20),
+    };
+
+    it('should create a session with the correct values', () => {
+      const session = Session.fromJson(validJson);
+
+      session.day.should.equal(Day.Monday);
+      session.location.building.should.equal('test');
+      session.location.room.should.equal(100);
+      session.time.start.hour.should.equal(0);
+      session.time.start.minute.should.equal(10);
+      session.time.end.hour.should.equal(2);
+      session.time.end.minute.should.equal(20);
+    });
+    it('should not allow creating a session when day is missing', () => {
+      const { day, ...partialJson } = validJson;
+
+      (() => Session.fromJson(partialJson)).should.throw(BadFormatError);
+    });
+    it('should not allow creating a session when day is invalid', () => {
+      const invalidJson = { ...validJson, day: 0 };
+
+      (() => Session.fromJson(invalidJson)).should.throw(BadFormatError);
+    });
+    it('should not allow creating a session when location is missing', () => {
+      const { location, ...partialJson } = validJson;
+
+      (() => Session.fromJson(partialJson)).should.throw(BadFormatError);
+    });
+    it('should not allow creating a session when location is invalid', () => {
+      const invalidJson = { ...validJson, location: {} };
+
+      (() => Session.fromJson(invalidJson)).should.throw(BadFormatError);
+    });
   });
 
   describe('toJson()', () => {
-    it('should return a session with appropriate values');
+    it('should return a session with appropriate values', () => {
+      const session = new Session(Day.Monday, { building: 'test', room: 100 }, new TimeRange(new Time(0, 0),
+        new Time(1, 1)));
+      const json = session.toJson();
+
+      json.day.should.equal(1);
+      json.location.building.should.equal('test');
+      json.location.room.should.equal(100);
+      session.time.start.hour.should.equal(0);
+      session.time.start.minute.should.equal(0);
+      session.time.end.hour.should.equal(1);
+      session.time.end.minute.should.equal(1);
+    });
   });
 
   describe('overlaps()', () => {
