@@ -1,6 +1,6 @@
 {
   "name": "@rizadh/scheduler",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Generate course schedules",
   "main": "dist/index.js",
   "dependencies": {
@@ -21,7 +21,7 @@
     "test": "npm run build && npm run test-only",
     "demo-only": "node dist/demo.js",
     "demo": "npm run build && npm run demo-only",
-    "clean": "rimraf dist src/*.js test/*.js"
+    "clean": "rimraf dist"
   },
   "author": "Rizadh Nizam",
   "repository": {

@@ -5,4 +5,7 @@ env:
   - TEST_COMMAND=test
   - TEST_COMMAND=lint
   - TEST_COMMAND=demo
+cache:
+  directories:
+    - node_modules
 script: npm run $TEST_COMMAND
