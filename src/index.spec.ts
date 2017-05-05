@@ -4,8 +4,10 @@ import { should } from 'chai';
 import 'mocha';
 
 import { BadFormatError } from './BadFormatError';
+import { IllegalValueError } from './IllegalValueError';
 import { InvalidTimeRangeError } from './InvalidTimeRangeError';
 import { InvalidTimeValueError } from './InvalidTimeValueError';
+import { Section } from './Section';
 import { Day, Session } from './Session';
 import { Time } from './Time';
 import { TimeRange } from './TimeRange';
@@ -323,21 +325,25 @@ describe('Session', () => {
       session.time.end.hour.should.equal(2);
       session.time.end.minute.should.equal(20);
     });
+
     it('should not allow creating a session when day is missing', () => {
       const { day, ...partialJson } = validJson;
 
       (() => Session.fromJson(partialJson)).should.throw(BadFormatError);
     });
+
     it('should not allow creating a session when day is invalid', () => {
       const invalidJson = { ...validJson, day: 0 };
 
       (() => Session.fromJson(invalidJson)).should.throw(BadFormatError);
     });
+
     it('should not allow creating a session when location is missing', () => {
       const { location, ...partialJson } = validJson;
 
       (() => Session.fromJson(partialJson)).should.throw(BadFormatError);
     });
+
     it('should not allow creating a session when location is invalid', () => {
       const invalidJson = { ...validJson, location: {} };
 
@@ -391,8 +397,28 @@ describe('Session', () => {
 
 describe('Section', () => {
   describe('new Section()', () => {
-    it('should create an instance with the given values');
-    it('should not allow creating a section with overlapping sessions');
+    it('should create an instance with the given values', () => {
+      const sessionA = new Session(Day.Monday, { building: 'TEST', room: 0 }, new TimeRange(new Time(0, 0),
+        new Time(1, 1)));
+      const sessionB = new Session(Day.Monday, { building: 'TEST', room: 1 }, new TimeRange(new Time(3, 3),
+        new Time(4, 4)));
+
+      const section = new Section('a', new Set([sessionA, sessionB]));
+
+      section.identifier.should.equal('a');
+      [...section.sessions].includes(sessionA).should.be.true;
+      [...section.sessions].includes(sessionB).should.be.true;
+      [...section.sessions].some((session) => [sessionA, sessionB].includes(session));
+    });
+
+    it('should not allow creating a section with overlapping sessions', () => {
+      const sessionA = new Session(Day.Monday, { building: 'TEST', room: 0 }, new TimeRange(new Time(0, 0),
+        new Time(1, 1)));
+      const sessionB = new Session(Day.Monday, { building: 'TEST', room: 1 }, new TimeRange(new Time(0, 30),
+        new Time(1, 30)));
+
+      (() => new Section('a', new Set([sessionA, sessionB]))).should.throw(IllegalValueError);
+    });
   });
 
   describe('fromJson()', () => {
@@ -406,7 +432,7 @@ describe('Section', () => {
     it('should create a simple object representing the section');
   });
 
-  describe('new Section()', () => {
+  describe('overlaps()', () => {
     it('should create a section with the appropriate values');
     it('should not allow creating a section with overlapping sessions');
   });

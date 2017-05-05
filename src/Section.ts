@@ -1,5 +1,6 @@
 import { BadFormatError } from './BadFormatError';
 import { DeepPartial } from './DeepPartial';
+import { IllegalValueError } from './IllegalValueError';
 import { ISession, Session } from './Session';
 
 export interface ISection {
@@ -26,7 +27,15 @@ export class Section {
     return new Section(source.identifier, sessions);
   }
 
-  public constructor(public readonly identifier: string, public readonly sessions: Set<Session>) { }
+  public constructor(public readonly identifier: string, public readonly sessions: Set<Session>) {
+    for (const sessionA of sessions) {
+      for (const sessionB of sessions) {
+        if (sessionA !== sessionB && sessionA.overlaps(sessionB)) {
+          throw new IllegalValueError('Section cannot have overlapping sessions');
+        }
+      }
+    }
+  }
 
   public overlaps(other: Section): boolean {
     for (const session of this.sessions) {
