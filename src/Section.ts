@@ -1,6 +1,7 @@
 import { BadFormatError } from './BadFormatError';
 import { DeepPartial } from './DeepPartial';
 import { IllegalValueError } from './IllegalValueError';
+import { IOverlappable } from './IOverlappable';
 import { ISession, Session } from './Session';
 
 export interface ISection {
@@ -8,7 +9,7 @@ export interface ISection {
   sessions: ISession[];
 }
 
-export class Section {
+export class Section implements IOverlappable<Section> {
   public static fromJson(source: DeepPartial<ISection>): Section {
     if (typeof source.identifier !== 'string') {
       throw new BadFormatError(`'identifier' field is not a string or does not exist`);

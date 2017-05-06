@@ -1,6 +1,7 @@
 import { BadFormatError } from './BadFormatError';
 import { DeepPartial } from './DeepPartial';
 import { InvalidTimeValueError } from './InvalidTimeValueError';
+import { IOverlappable } from './IOverlappable';
 import { ITime, Time } from './Time';
 import { TimeRange } from './TimeRange';
 
@@ -26,7 +27,7 @@ export const enum Day {
   Saturday,
 }
 
-export class Session {
+export class Session implements IOverlappable<Session> {
   public static fromJson(source: DeepPartial<ISession>): Session {
     if (source.start === undefined) {
       throw new BadFormatError(`'start' field does not exist`);
