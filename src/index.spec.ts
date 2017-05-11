@@ -433,8 +433,8 @@ describe('Section', () => {
   });
 
   describe('overlaps()', () => {
-    it('should create a section with the appropriate values');
-    it('should not allow creating a section with overlapping sessions');
+    it('should return true when sections overlap');
+    it('should return false when sections do not overlap');
   });
 });
 
@@ -455,8 +455,7 @@ describe('Course', () => {
     it('should create a simple object representing the course');
   });
 
-  describe('new Section()', () => {
-    it('should create a section with the appropriate values');
-    it('should not allow creating a section with overlapping sessions');
+  describe('possibleSectionCombinations()', () => {
+    it('should return all possible section combinations');
   });
 });
