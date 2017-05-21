@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "Generate course schedules",
   "main": "dist/index.js",
+  "typings": "dist",
   "dependencies": {
     "@types/chai": "^3.5.0",
     "@types/mocha": "^2.2.40",
