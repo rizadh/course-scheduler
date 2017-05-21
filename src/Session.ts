@@ -1,7 +1,6 @@
 import { BadFormatError } from './BadFormatError';
 import { DeepPartial } from './DeepPartial';
 import { InvalidTimeValueError } from './InvalidTimeValueError';
-import { IOverlappable } from './IOverlappable';
 import { ITime, Time } from './Time';
 import { TimeRange } from './TimeRange';
 
@@ -27,7 +26,7 @@ export const enum Day {
   Saturday,
 }
 
-export class Session implements IOverlappable<Session> {
+export class Session {
   public static fromJson(source: DeepPartial<ISession>): Session {
     if (source.start === undefined) {
       throw new BadFormatError(`'start' field does not exist`);
@@ -46,8 +45,7 @@ export class Session implements IOverlappable<Session> {
     }
 
     return new Session(
-      Session.parseDay(source.day),
-      Session.parseLocation(source.location),
+      Session.parseDay(source.day), Session.parseLocation(source.location),
       new TimeRange(
         Time.fromJson(source.start),
         Time.fromJson(source.end),
@@ -84,8 +82,11 @@ export class Session implements IOverlappable<Session> {
     return location as ILocation;
   }
 
-  public constructor(public readonly day: Day, public readonly location: ILocation, public readonly time: TimeRange) {
-    if (![Day.Monday, Day.Tuesday, Day.Wednesday, Day.Thursday, Day.Friday].includes(day)) {
+  public constructor(
+    public readonly day: Day, public readonly location: ILocation,
+    public readonly time: TimeRange) {
+    if (![Day.Monday, Day.Tuesday, Day.Wednesday, Day.Thursday, Day.Friday]
+      .includes(day)) {
       throw new InvalidTimeValueError('day', day);
     }
   }
