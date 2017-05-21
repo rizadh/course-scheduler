@@ -1,20 +1,32 @@
 /* tslint:disable:no-console */
-import { Course, generateCourse } from './index';
+import { CourseSet, generateCourse } from './index';
 
 for (let i = 0; i < 100; i++) {
     const sample = new Set(new Array(5).fill(undefined).map(() => generateCourse()));
 
-    const possibleCombinations = Course.possibleSectionCombinations(sample);
+    const courseSet = new CourseSet();
+    courseSet.minCourses = 5;
+    const possibleCombinations = courseSet.findCombinations(sample);
 
-    if (possibleCombinations.size > 0) {
-        console.log(JSON.stringify([...sample].map((course) => course.toJson())));
-        possibleCombinations.forEach((combination) => {
-            combination.forEach((section, course) => {
-                console.log(`${course.code} -> ${section.identifier}`);
-            });
+    let combinationFound = false;
+    let numFound = 0;
+
+    for (const combination of possibleCombinations) {
+        if (!combinationFound) {
+            console.log(JSON.stringify([...sample].map((course) => course.toJson())));
+        }
+        combinationFound = true;
+        combination.combination.forEach((section, course) => {
+            console.log(`${course.code} -> ${section.identifier}: ${section.sessions}`);
         });
 
+        console.log();
+        numFound++;
+    }
+
+    if (combinationFound) {
         console.log(`Iteration ${i}`);
+        console.log(`Found ${numFound}`);
         process.exit(0);
     }
 }

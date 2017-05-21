@@ -12,11 +12,13 @@ export interface ICourse {
 export class Course {
   public static fromJson(source: DeepPartial<ICourse>): Course {
     if (typeof source.code !== 'string') {
-      throw new BadFormatError(`'code' field is not a string or does not exist`);
+      throw new BadFormatError(
+        `'code' field is not a string or does not exist`);
     }
 
     if (!Array.isArray(source.sections)) {
-      throw new BadFormatError(`'sections' field is not an array or does not exist`);
+      throw new BadFormatError(
+        `'sections' field is not an array or does not exist`);
     }
 
     const sections: Set<Section> = new Set();
@@ -28,8 +30,10 @@ export class Course {
     return new Course(source.code, sections);
   }
 
-  public static possibleSectionCombinations(courses: Set<Course>): Set<Map<Course, Section>> {
-    const combinations: Set<SectionCombination> = Course.sectionCombinations(courses);
+  public static possibleSectionCombinations(courses: Set<Course>):
+    Set<Map<Course, Section>> {
+    const combinations: Set<SectionCombination> =
+      Course.sectionCombinations(courses);
     const possibleCombinations: Set<SectionCombination> = new Set();
 
     for (const combination of combinations) {
@@ -41,7 +45,8 @@ export class Course {
     return possibleCombinations;
   }
 
-  private static combinationIsPossible(combination: SectionCombination): boolean {
+  private static combinationIsPossible(combination: SectionCombination):
+    boolean {
     const sections = [...combination.values()];
 
     for (let i = 0; i < sections.length; i++) {
@@ -55,7 +60,8 @@ export class Course {
     return true;
   }
 
-  private static sectionCombinations(courses: Set<Course>): Set<SectionCombination> {
+  private static sectionCombinations(courses: Set<Course>):
+    Set<SectionCombination> {
     let combinations: Set<SectionCombination> = new Set();
 
     for (const course of courses) {
@@ -65,7 +71,8 @@ export class Course {
     return combinations;
   }
 
-  public constructor(public readonly code: string, public readonly sections: Set<Section>) { }
+  public constructor(
+    public readonly code: string, public readonly sections: Set<Section>) { }
 
   public toJson(): ICourse {
     return {
@@ -74,7 +81,8 @@ export class Course {
     };
   }
 
-  private addTo(combinations: Set<SectionCombination>): Set<SectionCombination> {
+  private addTo(combinations: Set<SectionCombination>):
+    Set<SectionCombination> {
     if (combinations.size === 0) {
       for (const section of this.sections) {
         combinations.add(new Map([[this, section]]));

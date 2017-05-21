@@ -6,3 +6,5 @@ export * from './Section';
 export * from './Session';
 export * from './Time';
 export * from './TimeRange';
+export * from './CourseSet';
+export * from './CourseCombination';
