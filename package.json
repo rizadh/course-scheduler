@@ -15,6 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "install": "npm run build",
     "build": "tsc",
     "test-only": "mocha dist/*.spec.js",
     "lint": "tslint --project tsconfig.json --type-check src/**/*",
